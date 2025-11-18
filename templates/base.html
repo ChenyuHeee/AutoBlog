@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page_description or site.description }}" />
+  <link rel="stylesheet" href="{{ url_for('style.css') }}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="{{ url_for(trailing_slash=True) }}">{{ site.title }}</a>
+      <p class="site-description">{{ site.description }}</p>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; {{ site.title }} {{ build_time.year }}</p>
+    </div>
+  </footer>
+</body>
+</html>
