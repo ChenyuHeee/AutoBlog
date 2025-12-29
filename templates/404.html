@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set not_found_phrases = [
+  "只在此山中，云深不知处",
+  "行到水穷处，坐看云起时",
+  "云无心以出岫，鸟倦飞而知还",
+  "山重水复疑无路，柳暗花明又一村"
+] %}
+<section class="not-found">
+  <div class="not-found__halo" aria-hidden="true"></div>
+  <div class="not-found__mist" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <p class="not-found__code" aria-hidden="true">404</p>
+  <h1 class="not-found__title" data-404-heading>{{ not_found_phrases[0] }}</h1>
+  <p
+    class="not-found__poem"
+    data-404-typing
+    data-phrases='{{ not_found_phrases | tojson | safe }}'
+    aria-live="polite"
+  >
+    <span class="not-found__poem-text" data-default="{{ not_found_phrases[0] }}">{{ not_found_phrases[0] }}</span>
+    <span class="not-found__caret" aria-hidden="true"></span>
+  </p>
+  <p class="not-found__summary">
+    很抱歉，我们没能找到你访问的内容。可以返回首页继续探索，或者试试站内搜索。
+  </p>
+  <div class="not-found__actions">
+    <a class="button" href="{{ url_for(trailing_slash=True) }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4L3 12h3v8h6v-5h0a2 2 0 012 2v3h6v-8h3z" /></svg>
+      返回首页
+    </a>
+    {% if search_enabled %}
+    <a class="button button--ghost" href="{{ url_for('search', trailing_slash=True) }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 4a6.5 6.5 0 015.196 10.49l3.907 3.907-1.414 1.414-3.907-3.907A6.5 6.5 0 1110.5 4zm0 2a4.5 4.5 0 100 9 4.5 4.5 0 000-9z" /></svg>
+      搜索本站
+    </a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

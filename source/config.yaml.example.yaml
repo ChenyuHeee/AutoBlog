@@ -1,0 +1,46 @@
+title: 博客
+description: 由 AutoBlog 驱动的学习与创作记录。
+timezone: UTC
+github_repo: <用于搭载博客的仓库>
+github_branch: <分支名>
+github_remote: origin
+github_remote_url: https:  #github.com/YourUsername/YourUsername.github.io.git
+author: Your Name
+#site_url: https:  #chenyuheee.github.io/
+contacts:
+  - label: 邮箱：123456789@example.com
+    url: mailto:123456789@example.com
+    icon: mail
+    note: 学习交流、工作联系欢迎直接来信
+  - label: GitHub @YourUsername
+    url: https:  #github.com/YourUsername
+    icon: github
+    note: 关注项目与代码更新
+# Uncomment to fully control the navigation menu.
+# nav_links:
+#   - label: Home
+#     url: /
+#   - label: Tags
+#     url: /tags/
+# Toggle to disable RSS generation while keeping canonical URLs.
+# rss_enabled: false
+# Uncomment and adjust base_url if you want to override the inferred path.
+# base_url: /AutoBlog/
+background_music:
+  enabled: true
+  src: media/日落.mp3
+  title: "日落"
+  artist: "孙燕姿"
+  cover: media/cover.jpg
+  autoplay: false
+  start_muted: true
+
+ai_summary:
+  provider: deepseek
+  api_key: ""  # set via DEEPSEEK_API_KEY env var
+  model: deepseek-chat
+  endpoint: https:  #api.deepseek.com/v1/chat/completions
+  temperature: 0.2
+  max_input_chars: 6000
+  max_tokens: 200
+  max_output_chars: 120

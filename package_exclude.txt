@@ -1,0 +1,13 @@
+# List additional files or folders to exclude when running scripts/package_project.py
+# Use POSIX-style glob patterns relative to the project root. Examples:
+# source/posts/private/**
+# source/posts/AIOPS论文翻译与学习/**
+public/**
+source/posts/**
+source/pages/**
+source/config.yaml
+.DS_Store
+source/assets/.DS_Store
+source/posts/**
+config.yaml
+assets/media/**
