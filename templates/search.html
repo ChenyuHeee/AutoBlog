@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page search-page">
+  <header class="search-page__header">
+    <h1 class="search-page__title">
+      <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M11 3a8 8 0 1 0 5.293 14.078l3.814 3.815 1.414-1.415-3.814-3.814A8 8 0 0 0 11 3zm0 2a6 6 0 1 1-6 6 6 6 0 0 1 6-6z" />
+      </svg>
+      站内搜索
+    </h1>
+    <p class="search-page__subtitle">通过关键字查找文章与页面。</p>
+  </header>
+  <form class="search-form" role="search">
+    <label class="search-form__label" for="search-input">关键词</label>
+    <input
+      class="search-form__input"
+      type="search"
+      id="search-input"
+      name="q"
+      placeholder="输入关键字，即可搜索标题、标签或摘要..."
+      autocomplete="off"
+      autocapitalize="none"
+      spellcheck="false"
+      autofocus
+    />
+  </form>
+  <div class="search-results" data-search-results>
+    <p class="search-results__empty">开始输入即可搜索全站内容。</p>
+  </div>
+</section>
+<script>
+  window.__AUTOBLOG_SEARCH_INDEX_URL__ = "{{ search_index_url }}";
+</script>
+<script src="{{ url_for('search.js') }}" defer></script>
+{% endblock %}

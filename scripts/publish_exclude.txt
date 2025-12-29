@@ -1,0 +1,26 @@
+# Patterns to exclude when publishing the open-source branch.
+# Format: POSIX-style globs relative to the repo root.
+#
+# Recommended defaults (keep engine, exclude personal content + generated output).
+
+# Generated build output
+public/**
+
+# Packaged / generated artifacts
+dist/**
+
+# Local/private config (contains personal info & secrets)
+source/config.yaml
+
+# Personal content (customize: you can narrow this down later)
+source/posts/**
+source/pages/**
+
+# Local OS/editor cruft
+.DS_Store
+**/.DS_Store
+
+# Python cache
+__pycache__/**
+**/__pycache__/**
+*.pyc

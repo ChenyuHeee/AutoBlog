@@ -1,20 +1,191 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section>
-  <h1>Articles</h1>
-  {% if posts %}
-  <ul class="post-list">
-    {% for post in posts %}
-    <li>
-      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      <p class="post-meta">{{ post.date.strftime("%B %d, %Y") }}</p>
-      <p class="post-description">{{ post.description }}</p>
-    </li>
-    {% endfor %}
-  </ul>
+<section class="hero">
+  {% if hero_post %}
+  <div class="hero__content">
+    {% if hero_label %}
+    <p class="hero__eyebrow">{{ hero_label }}</p>
+    {% endif %}
+    {% if hero_post.is_collection %}
+    <span class="hero__badge">文章合集</span>
+    {% endif %}
+    <h1 class="hero__title"><a href="{{ hero_post.url }}">{{ hero_post.title }}</a></h1>
+    <p class="hero__summary">{{ hero_post.description }}</p>
+    <div class="post-meta">
+      <span class="post-meta__item">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M7 3a1 1 0 0 1 2 0v1h6V3a1 1 0 0 1 2 0v1h1.5A2.5 2.5 0 0 1 21 6.5v12A2.5 2.5 0 0 1 18.5 21h-13A2.5 2.5 0 0 1 3 18.5v-12A2.5 2.5 0 0 1 5.5 4H7zm11.5 4h-13A.5.5 0 0 0 5 7.5V10h14V7.5a.5.5 0 0 0-.5-.5zm.5 10.5v-7H5v7a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5z" />
+        </svg>
+        <span>{{ hero_post.date.strftime("%Y年%m月%d日") }}</span>
+      </span>
+      <span class="post-meta__item">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 3.5zm0 2a6.5 6.5 0 1 1-6.5 6.5A6.5 6.5 0 0 1 12 5.5zm-.75 3a1 1 0 0 1 2 0v3.382l2.268 1.307a1 1 0 1 1-1 1.732l-2.768-1.594A1 1 0 0 1 11.25 12z" />
+        </svg>
+        <span>{{ hero_post.reading_time_label }}</span>
+      </span>
+    </div>
+    {% if hero_post.tags %}
+    <ul class="tag-list">
+      {% for tag in hero_post.tags %}
+      <li><a href="{{ tag_url(tag) }}">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <a class="button" href="{{ hero_post.url }}">
+      {% if hero_post.is_collection %}查看合集{% else %}阅读全文{% endif %}
+      <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M5 12a1 1 0 0 1 1-1h9.586l-2.293-2.293 1.414-1.414L19.414 12l-4.707 4.707-1.414-1.414L15.586 13H6a1 1 0 0 1-1-1z" />
+      </svg>
+    </a>
+  </div>
   {% else %}
-  <p>No posts published yet. Add Markdown files to <code>source/posts/</code> and rebuild.</p>
+  <div class="hero__content">
+    <h1 class="hero__title">欢迎</h1>
+    <p class="hero__summary">在 <code>source/posts/</code> 中开始写作，文章就会展示在这里。</p>
+  </div>
   {% endif %}
+</section>
+
+<section class="content-layout">
+  <div class="posts-grid">
+    <h2 class="section-title">全部文章</h2>
+    {% if grid_posts %}
+    <div class="posts-grid__list">
+      {% for post in grid_posts %}
+      <article class="post-card">
+        {% if post.is_collection %}
+        <span class="post-card__badge">文章合集 · {{ post.post_count }} 篇</span>
+        {% endif %}
+        <p class="post-card__meta">
+          <span class="post-card__meta-item">
+            <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M7 3a1 1 0 0 1 2 0v1h6V3a1 1 0 0 1 2 0v1h1.5A2.5 2.5 0 0 1 21 6.5v12A2.5 2.5 0 0 1 18.5 21h-13A2.5 2.5 0 0 1 3 18.5v-12A2.5 2.5 0 0 1 5.5 4H7zm11.5 4h-13A.5.5 0 0 0 5 7.5V10h14V7.5a.5.5 0 0 0-.5-.5zm.5 10.5v-7H5v7a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5z" />
+            </svg>
+            <span>{{ post.date.strftime("%Y年%m月%d日") }}</span>
+          </span>
+          <span class="post-card__meta-item">
+            <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 3.5zm0 2a6.5 6.5 0 1 1-6.5 6.5A6.5 6.5 0 0 1 12 5.5zm-.75 3a1 1 0 0 1 2 0v3.382l2.268 1.307a1 1 0 1 1-1 1.732l-2.768-1.594A1 1 0 0 1 11.25 12z" />
+            </svg>
+            <span>{{ post.reading_time_label }}</span>
+          </span>
+        </p>
+        <h3 class="post-card__title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p class="post-card__excerpt">{{ post.description }}</p>
+        {% if post.tags %}
+        <ul class="tag-list tag-list--compact">
+          {% for tag in post.tags %}
+          <li><a href="{{ tag_url(tag) }}">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <a class="post-card__read-more" href="{{ post.url }}">
+          {% if post.is_collection %}打开合集{% else %}继续阅读{% endif %}
+          <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M5 12a1 1 0 0 1 1-1h9.586l-2.293-2.293 1.414-1.414L19.414 12l-4.707 4.707-1.414-1.414L15.586 13H6a1 1 0 0 1-1-1z" />
+          </svg>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>暂时没有更多文章。</p>
+    {% endif %}
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar__section">
+      <h2 class="section-title">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 3.25a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 12 5.25zM11 10h2v7h-2z" />
+        </svg>
+        关于本站
+      </h2>
+      <p>{{ site.description }}</p>
+      <a class="button button--ghost" href="{{ url_for('about', trailing_slash=True) }}">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm.75 5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zM11 10h2v7h-2z" />
+        </svg>
+        了解更多
+      </a>
+    </div>
+    {% if site.contacts %}
+    <div class="sidebar__section sidebar__section--contacts">
+      <h2 class="section-title">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M12 12.713l8-4.8V7.2a2.2 2.2 0 0 0-2.2-2.2H6.2A2.2 2.2 0 0 0 4 7.2v.713l8 4.8zm0 2.574L4 10.487V16.8A2.2 2.2 0 0 0 6.2 19h11.6a2.2 2.2 0 0 0 2.2-2.2v-6.313z" />
+        </svg>
+        联系方式
+      </h2>
+      <ul class="contact-list">
+        {% for contact in site.contacts %}
+        <li class="contact-list__item">
+          <span class="contact-list__icon" aria-hidden="true">
+            {% if contact.icon == "mail" %}
+            <svg viewBox="0 0 24 24">
+              <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-11Zm2.5-.5a.5.5 0 0 0-.5.5v.287l6 3.6 6-3.6V6.5a.5.5 0 0 0-.5-.5h-11Zm11.5 3.487-6 3.6-6-3.6V17.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5Z" />
+            </svg>
+            {% elif contact.icon == "github" %}
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 0 0-3.162 19.492c.5.094.683-.217.683-.483 0-.237-.01-1.022-.015-1.854-2.78.604-3.369-1.19-3.369-1.19-.454-1.152-1.11-1.46-1.11-1.46-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.833.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.942 0-1.09.39-1.983 1.03-2.68-.104-.253-.447-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.563 9.563 0 0 1 12 6.844a9.56 9.56 0 0 1 2.5.336c1.91-1.294 2.748-1.025 2.748-1.025.547 1.378.204 2.395.1 2.648.642.697 1.03 1.59 1.03 2.68 0 3.842-2.338 4.686-4.566 4.935.36.31.68.92.68 1.855 0 1.338-.012 2.418-.012 2.746 0 .268.18.58.688.48A10.001 10.001 0 0 0 12 2Z" />
+            </svg>
+            {% elif contact.icon == "linkedin" %}
+            <svg viewBox="0 0 24 24">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2ZM8.337 18.337H5.667V9.667h2.67v8.67ZM6.99 8.49a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1Zm11.347 9.847h-2.666v-4.233c0-1.01-.02-2.307-1.407-2.307-1.41 0-1.627 1.1-1.627 2.237v4.303h-2.667V9.667h2.56v1.18h.037c.356-.675 1.223-1.387 2.517-1.387 2.693 0 3.19 1.773 3.19 4.08v4.798Z" />
+            </svg>
+            {% elif contact.icon == "wechat" %}
+            <svg viewBox="0 0 24 24">
+              <path d="M10.4 5C6.975 5 4 7.335 4 10.2c0 1.478.751 2.813 1.947 3.74l-.58 1.807 2.043-1.064a7.04 7.04 0 0 0 2.99.654c3.425 0 6.4-2.335 6.4-5.2C16.8 7.335 13.825 5 10.4 5Zm-2 2.4a.8.8 0 1 1 0 1.6.8.8 0 0 1 0-1.6Zm4 0a.8.8 0 1 1 0 1.6.8.8 0 0 1 0-1.6ZM19.6 10.8c0 2.638-2.596 4.8-5.6 4.8-.276 0-.55-.018-.82-.051-.63.4-1.451.762-2.246.964-.171.043-.35.077-.526.106l.402-1.254a5.83 5.83 0 0 1-1.51-.552c.517.056 1.11.088 1.704.088 3.593 0 6.8-2.287 6.8-5.1 0-.625-.145-1.217-.4-1.765 1.319.77 2.196 1.998 2.196 3.764Zm-3.6-.4a.7.7 0 1 0 0-1.4.7.7 0 0 0 0 1.4Zm-2.8 0a.7.7 0 1 0 0-1.4.7.7 0 0 0 0 1.4Z" />
+            </svg>
+            {% else %}
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3a9 9 0 1 0 9 9 9.011 9.011 0 0 0-9-9Zm3.707 9.707-3 3a1 1 0 0 1-1.414 0l-3-3 1.414-1.414L11 12.586V7h2v5.586l1.293-1.293Z" />
+            </svg>
+            {% endif %}
+          </span>
+          <div class="contact-list__body">
+            {% set is_external = contact.url.startswith('http') %}
+            <a class="contact-list__link" href="{{ contact.url }}" {% if is_external %}target="_blank" rel="noopener"{% endif %}>{{ contact.label }}</a>
+            {% if contact.note %}
+            <p class="contact-list__note">{{ contact.note }}</p>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if all_tags %}
+    <div class="sidebar__section">
+      <h2 class="section-title">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M4 4h7.172a3 3 0 0 1 2.121.879l6.828 6.828a3 3 0 0 1 0 4.242l-3.172 3.172a3 3 0 0 1-4.242 0L5.121 12.95A3 3 0 0 1 4.242 10.83L4 10.586V6a2 2 0 0 1 2-2zm3 2a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 7 6z" />
+        </svg>
+        热门标签
+      </h2>
+      <ul class="tag-list tag-list--cloud">
+        {% for tag in all_tags.values() %}
+        <li><a href="{{ tag.url }}">{{ tag.name }} <span>{{ tag.count }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if all_posts|length > 1 %}
+    <div class="sidebar__section">
+      <h2 class="section-title">
+        <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M6 5a2 2 0 0 1 2-2h12v18H8a2 2 0 0 1-2-2zm2 0v14h10V5zm-4 2H4v12a4 4 0 0 0 4 4h12v-2H8a2 2 0 0 1-2-2z" />
+        </svg>
+        最新文章
+      </h2>
+      <ul class="sidebar__list">
+        {% for post in all_posts[:5] %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </aside>
 </section>
 {% endblock %}
