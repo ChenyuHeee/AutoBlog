@@ -47,27 +47,25 @@ AutoBlog 用来把你写的 Markdown 文章生成一个完整的静态博客站�
 
 ```bash
 git clone https://github.com/ChenyuHeee/AutoBlog
-  - label: 首页
-    url: /
-  - label: 标签
-    url: /tags/
-  - label: GitHub
-    url: https://github.com/ChenyuHeee/AutoBlog
+cd AutoBlog
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+```
 
-## Desktop App (PySide6)
+### 2）推荐：使用桌面端编辑器（编辑 + 预览 + 构建）
 
-提供一个本地桌面应用（非 Web 后台），用于：编辑 config、编辑 Markdown 并实时预览、编辑主题文件、点击构建并打开本地预览。
+如果你不想手动改配置/命令行构建，可以直接用桌面端 App 来管理：编辑 `config.yaml`、编辑 Markdown 并实时预览、编辑主题文件、点击构建并打开本地预览。
 
-1) 安装依赖
+#### Desktop App (PySide6)
+
+安装依赖：
 
 ```bash
 pip install -r requirements.txt -r requirements_desktop.txt
 ```
 
-2) 启动
+启动：
 
 ```bash
 python run_desktop.py
@@ -76,7 +74,8 @@ python run_desktop.py
 说明：
 - “构建”会复用 build.py 的逻辑生成 public/
 - “启动预览服务”会在本机起一个静态服务器，然后用系统浏览器打开
-```
+
+（继续下一步：创建站点配置）
 
 ### 3）创建你的站点配置
 
@@ -84,10 +83,23 @@ python run_desktop.py
 
 ```bash
 cp source/config.yaml.example.yaml source/config.yaml
+```
+
+然后编辑 `source/config.yaml`（下面是一个最小示例，按你的仓库信息修改）：
+
+```yaml
+nav:
+  - label: 首页
+    url: /
+  - label: 标签
+    url: /tags/
+  - label: GitHub
+    url: https://github.com/YourName/YourRepo
+
+social:
   - label: 邮箱：you@example.com
     url: mailto:you@example.com
     icon: mail
-    note: 学习交流欢迎来信
   - label: GitHub @YourName
     url: https://github.com/YourName
     icon: github
@@ -123,16 +135,17 @@ description: "我的第一篇博客。"
 
 ### 5）本地预览
 
+推荐：用桌面端编辑器直接点击“构建”+“打开预览”。
+
+命令行方式：
+
 ```bash
 python3 build.py
-  provider: deepseek
-  api_key: ""  # 推荐使用环境变量 DEEPSEEK_API_KEY
-  model: deepseek-chat
-  endpoint: https://api.deepseek.com/v1/chat/completions
-  temperature: 0.2
-  max_input_chars: 6000
-  max_tokens: 200
-  max_output_chars: 120
+```
+
+构建完成后，打开 `public/index.html` 即可预览。
+
+### 6）部署到 GitHub Pages
 
 ```bash
 python3 build.py --deploy
