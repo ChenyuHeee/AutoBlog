@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1 class="page-title">全部标签</h1>
+  <p class="page-subtitle">按主题浏览，快速找到相关内容。</p>
+</section>
+
+<section class="tag-collection">
+  {% if tags %}
+  <ul class="tag-collection__list">
+    {% for tag in tags %}
+    <li class="tag-collection__item">
+      <a href="{{ tag.url }}">
+        <span class="tag-collection__name">{{ tag.name }}</span>
+        <span class="tag-collection__count">
+          <svg class="icon icon--sm" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M4 4h7.172a3 3 0 0 1 2.121.879l6.828 6.828a3 3 0 0 1 0 4.242l-3.172 3.172a3 3 0 0 1-4.242 0L5.121 12.95A3 3 0 0 1 4.242 10.83L4 10.586V6a2 2 0 0 1 2-2zm3 2a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 7 6z" />
+          </svg>
+          {{ tag.count }} 篇文章
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>尚未设置标签——在文章的元数据中添加 `tags` 字段即可开始使用。</p>
+  {% endif %}
+</section>
+{% endblock %}

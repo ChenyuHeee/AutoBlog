@@ -1,0 +1,15 @@
+__pycache__/
+.venv/
+*.pyc
+public/
+
+# macOS
+.DS_Store
+
+# build artifacts
+build/
+dist/
+
+# --- AutoBlog: local-only (recommended) ---
+source/config.yaml
+public/

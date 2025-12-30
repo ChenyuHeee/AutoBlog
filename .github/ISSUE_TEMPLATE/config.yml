@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/ChenyuHeee/AutoBlog/blob/main/README.md
+    about: Read the README (quickstart, config, gotchas)
+  - name: Security report
+    url: https://github.com/ChenyuHeee/AutoBlog/blob/main/SECURITY.md
+    about: Please report security issues privately

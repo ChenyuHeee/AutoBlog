@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if title %}{{ title }} · {% endif %}AutoBlog Admin</title>
+  <link rel="stylesheet" href="/static/admin.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="/">AutoBlog Admin</a>
+      <nav class="nav">
+        <a class="nav__link" href="/config">Config</a>
+        <a class="nav__link" href="/content">内容</a>
+        <a class="nav__link" href="/theme">主题</a>
+        <a class="nav__link" href="/build">构建</a>
+        <a class="nav__link" href="/preview/" target="_blank" rel="noopener">预览</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% if error %}
+      <div class="alert alert--error">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert--success">{{ success }}</div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="/static/admin.js" defer></script>
+</body>
+</html>
