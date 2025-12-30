@@ -123,9 +123,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         basic_group = QtWidgets.QGroupBox("基础")
         basic_form = QtWidgets.QFormLayout(basic_group)
+        basic_form.setFormAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        )
         basic_form.setLabelAlignment(
             QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter
         )
+        basic_form.setFieldGrowthPolicy(
+            QtWidgets.QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow
+        )
+        basic_form.setHorizontalSpacing(12)
+        basic_form.setVerticalSpacing(10)
         basic_group.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Maximum,
@@ -149,9 +157,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         gh_group = QtWidgets.QGroupBox("GitHub Pages")
         gh_form = QtWidgets.QFormLayout(gh_group)
+        gh_form.setFormAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        )
         gh_form.setLabelAlignment(
             QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter
         )
+        gh_form.setFieldGrowthPolicy(
+            QtWidgets.QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow
+        )
+        gh_form.setHorizontalSpacing(12)
+        gh_form.setVerticalSpacing(10)
         gh_group.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Maximum,
@@ -214,9 +230,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         music_group = QtWidgets.QGroupBox("背景音乐（background_music）")
         music_form = QtWidgets.QFormLayout(music_group)
+        music_form.setFormAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        )
         music_form.setLabelAlignment(
             QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter
         )
+        music_form.setFieldGrowthPolicy(
+            QtWidgets.QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow
+        )
+        music_form.setHorizontalSpacing(12)
+        music_form.setVerticalSpacing(10)
         music_group.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Maximum,
@@ -239,9 +263,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         ai_group = QtWidgets.QGroupBox("AI 摘要（ai_summary）")
         ai_form = QtWidgets.QFormLayout(ai_group)
+        ai_form.setFormAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        )
         ai_form.setLabelAlignment(
             QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter
         )
+        ai_form.setFieldGrowthPolicy(
+            QtWidgets.QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow
+        )
+        ai_form.setHorizontalSpacing(12)
+        ai_form.setVerticalSpacing(10)
         ai_group.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Maximum,
