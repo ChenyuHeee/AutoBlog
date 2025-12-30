@@ -1,0 +1,8 @@
+__pycache__/
+.venv/
+*.pyc
+public/
+
+# --- AutoBlog: local-only (recommended) ---
+source/config.yaml
+public/

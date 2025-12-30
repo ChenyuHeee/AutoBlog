@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="h1">构建</h1>
+  <p class="muted">执行构建会更新 public/，然后你可以打开 /preview/ 查看效果。</p>
+
+  <form method="post" action="/build" class="form">
+    <label class="check">
+      <input type="checkbox" name="include_drafts" value="true" />
+      <span>包含 draft 文章</span>
+    </label>
+    <label class="check">
+      <input type="checkbox" name="skip_clean" value="true" />
+      <span>不清空 public/（增量写入）</span>
+    </label>
+    <div class="actions">
+      <button class="btn" type="submit">开始构建</button>
+      <a class="btn btn--ghost" href="/preview/" target="_blank" rel="noopener">打开预览</a>
+    </div>
+  </form>
+{% endblock %}

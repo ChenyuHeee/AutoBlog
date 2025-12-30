@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="h1">Config</h1>
+  <p class="muted">保存到：<span class="mono">{{ config_path }}</span></p>
+
+  <form method="post" action="/config" class="form">
+    <label class="label" for="content">YAML</label>
+    <textarea class="textarea" id="content" name="content" spellcheck="false">{{ content }}</textarea>
+    <div class="actions">
+      <button class="btn" type="submit">保存</button>
+    </div>
+  </form>
+{% endblock %}

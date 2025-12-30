@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="h1">内容</h1>
+
+  <div class="two-col">
+    <section>
+      <h2 class="h2">文章（source/posts）</h2>
+      {% if posts %}
+        <ul class="list">
+          {% for p in posts %}
+            <li class="list__item">
+              <a href="/edit?path={{ p | urlencode }}">{{ p }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">暂无文章</p>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2 class="h2">页面（source/pages）</h2>
+      {% if pages %}
+        <ul class="list">
+          {% for p in pages %}
+            <li class="list__item">
+              <a href="/edit?path={{ p | urlencode }}">{{ p }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">暂无页面</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

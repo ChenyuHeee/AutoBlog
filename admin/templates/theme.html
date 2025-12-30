@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="h1">主题</h1>
+  <p class="muted">这里提供“文件级”编辑：templates/ 与 source/assets/。修改后请去“构建”生成 public/ 预览。</p>
+
+  <div class="two-col">
+    <section>
+      <h2 class="h2">模板（templates）</h2>
+      {% if template_files %}
+        <ul class="list">
+          {% for p in template_files %}
+            <li class="list__item"><a href="/edit?path={{ p | urlencode }}">{{ p }}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">未找到模板文件</p>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2 class="h2">资源（source/assets）</h2>
+      {% if asset_files %}
+        <ul class="list">
+          {% for p in asset_files %}
+            <li class="list__item"><a href="/edit?path={{ p | urlencode }}">{{ p }}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">未找到资源文件</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

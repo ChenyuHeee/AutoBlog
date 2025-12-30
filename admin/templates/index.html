@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="h1">管理后台</h1>
+  <p class="muted">在本地启动，用于编辑 source/ 与 templates/，并触发构建。</p>
+
+  <div class="grid">
+    <a class="card" href="/config">
+      <h2 class="h2">配置</h2>
+      <p>编辑 source/config.yaml</p>
+    </a>
+    <a class="card" href="/content">
+      <h2 class="h2">内容</h2>
+      <p>编辑文章与页面（Markdown 预览）</p>
+    </a>
+    <a class="card" href="/theme">
+      <h2 class="h2">主题</h2>
+      <p>编辑 templates 与 source/assets</p>
+    </a>
+    <a class="card" href="/build">
+      <h2 class="h2">构建</h2>
+      <p>生成 public/ 并在 /preview/ 预览</p>
+    </a>
+  </div>
+{% endblock %}
