@@ -94,6 +94,9 @@ class MainWindow(QtWidgets.QMainWindow):
             "如需自定义字段/保留注释，可切到“高级（YAML）”。"
         )
         info.setWordWrap(True)
+        info.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        )
         layout.addWidget(info)
 
         self.config_tabs = QtWidgets.QTabWidget()
@@ -106,16 +109,14 @@ class MainWindow(QtWidgets.QMainWindow):
         form_scroll = QtWidgets.QScrollArea()
         form_scroll.setWidgetResizable(True)
         form_scroll.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
-        form_scroll.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
-        )
         pref_layout.addWidget(form_scroll, 1)
 
         form_host = QtWidgets.QWidget()
         form_scroll.setWidget(form_host)
         form_layout = QtWidgets.QVBoxLayout(form_host)
-        form_layout.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignTop
+        form_host.setSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding,
+            QtWidgets.QSizePolicy.Policy.Preferred,
         )
         form_layout.setContentsMargins(8, 8, 8, 8)
         form_layout.setSpacing(12)
