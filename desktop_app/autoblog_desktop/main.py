@@ -4,6 +4,7 @@ import argparse
 import contextlib
 import datetime as dt
 import io
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,6 +16,9 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from .fs import list_files, read_text, write_text
 from .preview_server import PreviewServer
 from .project import Project
+
+
+YUNJIAN_RELEASES_URL = "https://github.com/ChenyuHeee/Yunjian/releases"
 
 
 def _ensure_repo_on_syspath(project_root: Path) -> None:
@@ -454,8 +458,11 @@ class MainWindow(QtWidgets.QMainWindow):
         btn_row = QtWidgets.QHBoxLayout()
         self.btn_file_save = QtWidgets.QPushButton("保存")
         self.btn_open_in_finder = QtWidgets.QPushButton("在 Finder 中打开")
+        self.btn_open_in_yunjian = QtWidgets.QPushButton("在云简中编辑")
+        self.btn_open_in_yunjian.setEnabled(False)
         btn_row.addWidget(self.btn_file_save)
         btn_row.addWidget(self.btn_open_in_finder)
+        btn_row.addWidget(self.btn_open_in_yunjian)
         btn_row.addStretch(1)
         right_layout.addLayout(btn_row)
 
@@ -468,6 +475,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.content_list.currentTextChanged.connect(self._open_relative_path)
         self.btn_file_save.clicked.connect(self._save_current_file)
         self.btn_open_in_finder.clicked.connect(self._reveal_current_file)
+        self.btn_open_in_yunjian.clicked.connect(self._open_in_yunjian)
 
         self._preview_timer = QtCore.QTimer(self)
         self._preview_timer.setSingleShot(True)
@@ -839,7 +847,35 @@ class MainWindow(QtWidgets.QMainWindow):
         self.file_editor.blockSignals(True)
         self.file_editor.setPlainText(read_text(path))
         self.file_editor.blockSignals(False)
+        self._update_yunjian_button_state()
         self._render_preview_now()
+
+    def _update_yunjian_button_state(self) -> None:
+        enabled = self.current.path is not None and self.current.path.suffix.lower() == ".md"
+        with contextlib.suppress(Exception):
+            self.btn_open_in_yunjian.setEnabled(enabled)
+
+    def _open_in_yunjian(self) -> None:
+        # Prefer launching the Yunjian app if installed; otherwise, open download page.
+        if self.current.path is None or self.current.path.suffix.lower() != ".md":
+            QtGui.QDesktopServices.openUrl(QtCore.QUrl(YUNJIAN_RELEASES_URL))
+            return
+
+        for app_name in ("云简", "Yunjian"):
+            try:
+                probe = subprocess.run(
+                    ["open", "-Ra", app_name],
+                    capture_output=True,
+                    text=True,
+                )
+                if probe.returncode != 0:
+                    continue
+                subprocess.run(["open", "-a", app_name, str(self.current.path)], check=False)
+                return
+            except Exception:
+                continue
+
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl(YUNJIAN_RELEASES_URL))
 
     def _schedule_preview(self) -> None:
         if self.current.path is None:
